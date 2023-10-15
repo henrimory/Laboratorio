@@ -7,12 +7,21 @@
 
 {% endblock 'head' %}
 
-
 {% block 'conteudo' %}
 
 <br>
 <br>
 <div class="container">
+    {% if messages %}
+
+        {% for message in messages %}
+            <div class="alert {{message.tags}}">{{message}}
+
+            </div>
+            <!--{{message}} | {{message.tags}}-->
+        {% endfor %}
+
+    {% endif %}
     <h3 class="font-destaque">Cadastre-se</h3>
     <div class="row">
     <div class="col-md-3" style="text-align: center">
@@ -20,7 +29,7 @@
         <h3>VitaLab</h3>
     </div>
     <div class="col-md-9">
-    <form action="" method="POST">
+    <form action="{% url "cadastro" %}" method="POST">{% csrf_token %} 
         <label>Primeiro nome</label>
         <br>
         <input type="text" class="input-default" name="primeiro_nome">
@@ -40,7 +49,7 @@
         <br>
         <label>Senha</label>
         <br>
-        <input type="text" class="input-default w100" name="senha">
+        <input type="password" class="input-default w100" name="senha">
     </div>
     <div class="col-md-4">
     <label>E-mail</label>
@@ -50,11 +59,11 @@
         <br>
         <label>Confirmar senha</label>
         <br>
-        <input type="text" class="input-default w100" name="confirmar_senha">
+        <input type="password" class="input-default w100" name="confirmar_senha" >
     </div>
     </div>
     <br>
-        <input type="submit" class="btn-default">
+        <input type="submit" class="btn-default" value="Cadastrar">
     </form>
     </div>
 {% endblock %}
