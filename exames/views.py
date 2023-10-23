@@ -2,7 +2,9 @@ from django.shortcuts import render
 from django.http import HttpResponse
 from django.contrib.auth.models import User
 from django.contrib.auth.decorators import login_required
-from .models import TiposExames
+from .models import TiposExames, PedidosExames
+from datetime import datetime
+
 
 @login_required
 def solicitar_exames(request):
@@ -32,3 +34,14 @@ def solicitar_exames(request):
         return render(request, 'solicitar_exames.html', {'tipos_exames':tipos_exames,
                                                           'solicitacao_exames': solicitacao_exames,
                                                           'preco_total':preco_total})
+    
+def fechar_pedido(request):
+    exames_id = request.POST.getlist('exames')
+    #print(exames_id)
+    pedido_exame = PedidosExames(
+        usuario=request.user,
+        data=datetime.now()
+    )
+    pedido_exame.save()
+
+    return HttpResponse('Estou aqui')
